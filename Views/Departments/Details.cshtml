@@ -1,0 +1,22 @@
+﻿@model RingoMediaTask.Models.Department
+@using RingoMediaTask.Models
+
+<h1>@Model.Name</h1>
+
+<h2>Sub-Departments</h2>
+<ul>
+    @foreach (var subDepartment in Model.SubDepartments)
+    {
+        <li>
+            <a asp-action="Details" asp-route-id="@subDepartment.Id">@subDepartment.Name</a>
+        </li>
+    }
+</ul>
+
+<h2>Parent Departments</h2>
+<ul>
+    @foreach (var parentDepartment in ViewBag.ParentDepartments as List<Department>)
+    {
+        <li>@parentDepartment.Name</li>
+    }
+</ul>

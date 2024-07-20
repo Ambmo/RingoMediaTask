@@ -1,0 +1,13 @@
+﻿@model IEnumerable<RingoMediaTask.Models.Reminder>
+
+<h1>Reminders</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<ul>
+    @foreach (var reminder in Model)
+    {
+        <li>@reminder.Title - @reminder.DateTime</li>
+    }
+</ul>

@@ -1,0 +1,90 @@
+﻿@model RingoMediaTask.Models.Department
+
+@{
+    ViewData["Title"] = "Create";
+}
+@*{
+<input class="form-control" type="file" data-val="true" data-val-required="The Logo field is required." id="Logo" name="Logo">
+}*@
+<h1>Create</h1>
+
+<h4>Department</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Logo" class="control-label"></label>
+                <input asp-for="Logo" class="form-control" type="file" />
+                <span asp-validation-for="Logo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParentDepartmentId" class="control-label"></label>
+                <select asp-for="ParentDepartmentId" class="form-control" asp-items="ViewBag.ParentDepartments">
+                    <option value="">-- None --</option>
+                </select>
+                <span asp-validation-for="ParentDepartmentId" class="text-danger"></span>
+            </div>
+            <div id="subDepartmentsContainer">
+                <h4>Sub-Departments</h4>
+                <button type="button" onclick="addSubDepartment()">Add Sub-Department</button>
+            </div>
+            <input type="hidden" name="SubDepartments.Count" id="subDepartmentsCount" value="0" />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        function addSubDepartment() {
+            var container = document.getElementById('subDepartmentsContainer');
+            var countInput = document.getElementById('subDepartmentsCount');
+            var index = parseInt(countInput.value, 10);
+
+            var div = document.createElement('div');
+            div.className = 'form-group';
+
+            var nameLabel = document.createElement('label');
+            nameLabel.innerHTML = 'Sub-Department Name';
+            div.appendChild(nameLabel);
+
+            var nameInput = document.createElement('input');
+            nameInput.type = 'text';
+            //nameInput.name = 'SubDepartments[' + index + '].Name';
+            nameInput.name = 'SubDepartments[' + index + '].Name';//use the same name, next step add it in the form and make it hidden for first click only!
+            nameInput.className = 'form-control';
+            div.appendChild(nameInput);
+
+            var logoLabel = document.createElement('label');
+            logoLabel.innerHTML = 'Sub-Department Logo';
+            div.appendChild(logoLabel);
+
+            var logoInput = document.createElement('input');
+            logoInput.type = 'file';
+            logoInput.name = 'subDepartmentLogos';
+            //logoInput.id = 'subDepartmentLogos';
+            logoInput.className = 'form-control';
+            div.appendChild(logoInput);
+
+            container.appendChild(div);
+
+            countInput.value = index + 1;
+            //List < IFormFile > subDepartmentLogos.add(logoInput);
+        }
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

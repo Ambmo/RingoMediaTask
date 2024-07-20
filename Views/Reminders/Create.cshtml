@@ -1,0 +1,15 @@
+﻿@model RingoMediaTask.Models.Reminder
+
+<h1>Create Reminder</h1>
+
+<form asp-action="Create">
+    <div>
+        <label asp-for="Title"></label>
+        <input asp-for="Title" />
+    </div>
+    <div>
+        <label asp-for="DateTime"></label>
+        <input asp-for="DateTime" type="datetime-local" />
+    </div>
+    <button type="submit">Create</button>
+</form>
